@@ -69,13 +69,13 @@ public class UserService implements GenericService {
     }
 
     private void checkRequiredFields(UserDTO dto) throws FieldRequiredException{
-        if(dto.getLogin() == null)
+        if(dto.getLogin() == null || dto.getLogin().isBlank())
             throw new FieldRequiredException("Login");
 
-        if(dto.getEmail() == null)
+        if(dto.getEmail() == null || dto.getEmail().isBlank())
             throw new FieldRequiredException("Email");
 
-        if(dto.getPlainPassword() == null)
+        if(dto.getPlainPassword() == null || dto.getPlainPassword().isBlank())
             throw new FieldRequiredException("Password");
     }
 

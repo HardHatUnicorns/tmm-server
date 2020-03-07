@@ -127,14 +127,14 @@ public class UserServiceTest {
     }
 
     @Test
-    void shouldReturnResponseAboutPlainPasswordRequired() {
+    void shouldReturnResponseAboutPlainPasswordRequiredNull() {
         UserDTO userFromUi = UserEntity.builder().login("user").email("user@tmm.com").build().toDTO();
 
         assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
     }
 
     @Test
-    void shouldReturnResponseAboutLoginRequired() {
+    void shouldReturnResponseAboutLoginRequiredNull() {
         UserDTO userFromUi = UserEntity.builder().email("user@tmm.com").build().toDTO();
         userFromUi.setPlainPassword("123");
 
@@ -142,8 +142,56 @@ public class UserServiceTest {
     }
 
     @Test
-    void shouldReturnResponseAboutEmailRequired() {
+    void shouldReturnResponseAboutEmailRequiredNull() {
         UserDTO userFromUi = UserEntity.builder().login("user").build().toDTO();
+        userFromUi.setPlainPassword("123");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutPlainPasswordRequiredBlank() {
+        UserDTO userFromUi = UserEntity.builder().login("user").email("user@tmm.com").build().toDTO();
+        userFromUi.setPlainPassword(" ");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutLoginRequiredBlank() {
+        UserDTO userFromUi = UserEntity.builder().email("user@tmm.com").login(" ").build().toDTO();
+        userFromUi.setPlainPassword("123");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutEmailRequiredBlank() {
+        UserDTO userFromUi = UserEntity.builder().login("user").email(" ").build().toDTO();
+        userFromUi.setPlainPassword("123");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutPlainPasswordRequiredEmpty() {
+        UserDTO userFromUi = UserEntity.builder().login("user").email("user@tmm.com").build().toDTO();
+        userFromUi.setPlainPassword("");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutLoginRequiredEmpty() {
+        UserDTO userFromUi = UserEntity.builder().email("user@tmm.com").login("").build().toDTO();
+        userFromUi.setPlainPassword("123");
+
+        assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
+    }
+
+    @Test
+    void shouldReturnResponseAboutEmailRequiredEmpty() {
+        UserDTO userFromUi = UserEntity.builder().login("user").email("").build().toDTO();
         userFromUi.setPlainPassword("123");
 
         assertThrows(FieldRequiredException.class, () -> userService.createUser(userFromUi));
