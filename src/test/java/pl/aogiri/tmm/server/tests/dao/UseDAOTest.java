@@ -1,4 +1,4 @@
-package pl.aogiri.tmm.server.dao;
+package pl.aogiri.tmm.server.tests.dao;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

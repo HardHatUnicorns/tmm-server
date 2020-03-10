@@ -10,6 +10,7 @@ import pl.aogiri.tmm.server.controller.GenericController;
 import pl.aogiri.tmm.server.dto.implementation.UserDTO;
 import pl.aogiri.tmm.server.service.implementation.UserService;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ public class UserController extends GenericController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "register")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         Optional<UserDTO> optionalUserDTO = userService.createUser(userDTO);
 
         if(optionalUserDTO.isPresent())

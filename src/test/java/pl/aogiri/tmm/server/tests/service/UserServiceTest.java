@@ -1,4 +1,4 @@
-package pl.aogiri.tmm.server.service;
+package pl.aogiri.tmm.server.tests.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

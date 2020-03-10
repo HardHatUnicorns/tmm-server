@@ -57,7 +57,6 @@ public class UserService implements GenericService {
 
         userDAO.save(userEntity);
         return Optional.of(userEntity.toDTO());
-
     }
 
     private boolean isLoginFree(String login){

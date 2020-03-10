@@ -13,8 +13,8 @@ public class ValidationSubError extends SubError {
     private Object rejectedValue;
     private String message;
 
-    ValidationSubError(String object, String message) {
-        this.object = object;
+    public ValidationSubError(String field, String message) {
+        this.field = field;
         this.message = message;
     }
 }

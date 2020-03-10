@@ -1,4 +1,4 @@
-package pl.aogiri.tmm.server.service.implementation;
+package pl.aogiri.tmm.server.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +12,7 @@ import pl.aogiri.tmm.server.dao.implementation.UserDAO;
 import pl.aogiri.tmm.server.entity.implementation.PrivilegeEntity;
 import pl.aogiri.tmm.server.entity.implementation.RoleEntity;
 import pl.aogiri.tmm.server.entity.implementation.UserEntity;
+import pl.aogiri.tmm.server.service.implementation.UserService;
 import pl.aogiri.tmm.server.util.enums.Message;
 
 import java.util.ArrayList;

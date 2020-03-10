@@ -6,6 +6,6 @@ import static java.lang.String.format;
 
 public class FieldRequiredException extends RegisterException {
     public FieldRequiredException(String fieldName) {
-        super(format(Message.FIELD_REQUIRED.getMessage(), fieldName));
+        super(format(Message.FIELD_REQUIRED.getMessage(), fieldName), fieldName);
     }
 }

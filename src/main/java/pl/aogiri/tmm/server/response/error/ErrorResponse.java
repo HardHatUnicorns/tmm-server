@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
+import pl.aogiri.tmm.server.response.error.sub.SubError;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Data
 @EqualsAndHashCode
@@ -15,16 +17,16 @@ public class ErrorResponse {
     int status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     LocalDateTime timestamp;
-    String message;
+    Collection<SubError> errors;
 
     private ErrorResponse(){
         timestamp = LocalDateTime.now();
     }
 
-    public  ErrorResponse(HttpStatus status, String message) {
+    public  ErrorResponse(HttpStatus status, Collection<SubError> errors) {
         this();
         this.status = status.value();
-        this.message = message;
+        this.errors = errors;
     }
 
 }

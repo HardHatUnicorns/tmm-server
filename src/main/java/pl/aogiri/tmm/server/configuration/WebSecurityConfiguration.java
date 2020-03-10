@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.aogiri.tmm.server.service.implementation.MyUserDetailsService;
+import pl.aogiri.tmm.server.service.security.MyUserDetailsService;
 
 import javax.sql.DataSource;
 
