@@ -9,9 +9,7 @@ import pl.aogiri.tmm.server.dto.GenericDTO;
 import pl.aogiri.tmm.server.entity.implementation.UserEntity;
 import pl.aogiri.tmm.server.util.Mapper;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -23,15 +21,23 @@ public class UserDTO implements GenericDTO<UserEntity> {
 
     private Long id;
 
+    @NotBlank(message = "Login is required")
+    @NotEmpty(message = "Login is required")
+    @NotNull(message = "Login is required")
     @Size(min = 6, max = 32)
     private String login;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-
+    @NotBlank(message = "Password is required")
+    @NotEmpty(message = "Password is required")
+    @NotNull(message = "Password is required")
     @Size(min = 8, max = 64)
     @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", message = "Password is not valid")
     private String plainPassword;
 
+    @NotBlank(message = "Email is required")
+    @NotEmpty(message = "Email is required")
+    @NotNull(message = "Email is required")
     @Email
     private String email;
 
