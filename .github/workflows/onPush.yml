@@ -1,4 +1,4 @@
-name: Job on push
+name: When new commit
 
 on:
   push:
