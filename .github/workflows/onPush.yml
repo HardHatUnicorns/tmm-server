@@ -1,8 +1,6 @@
-name: When new commit
+name: Java CI
 
-on:
-  push:
-    - '!master'
+on: [push]
 
 jobs:
   build:
@@ -12,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
-          uses: actions/setup-java@v1
-          with:
-            java-version: 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
       - name: Build with Maven
-        run: mvn -B test --file pom.xml
+        run: mvn -B package --file pom.xml
