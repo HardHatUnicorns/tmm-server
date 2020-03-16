@@ -20,9 +20,9 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        mysql database: 'tmm'
-        mysql user: 'tmmdbuser'
-        mysql password: Tmm#Wings4Win
+        mysql database: ${{ secrets.db_name }}
+        mysql user: ${{ secrets.db_login }}
+        mysql password: ${{ secrets.db_password }}
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
