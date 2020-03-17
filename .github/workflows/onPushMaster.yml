@@ -30,3 +30,4 @@ jobs:
 
     - name: Deploy to Wildfly
       run: mvn wildfly:deploy "-Dwfhost=${{ secrets.wildfly_hostname }}" "-Dwfport=${{ secrets.wildfly_port }}" "-Dwfusername=${{ secrets.wildfly_username }}" "-Dwfpassword=${{ secrets.wildfly_password }}"
+
