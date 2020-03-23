@@ -2,14 +2,14 @@ name: On push master deploy to Wildfly
 
 on:
   push:
-    branches: [ master ]
+    branches: [ * ]
 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
