@@ -2,9 +2,7 @@ name: On push master deploy to Wildfly
 
 on:
   push:
-    branches:
-      - '*'
-      - '!master'
+    branches: [ master ]
 
 
 jobs:
