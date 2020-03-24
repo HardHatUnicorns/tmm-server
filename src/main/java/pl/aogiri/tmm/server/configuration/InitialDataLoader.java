@@ -10,12 +10,9 @@ import pl.aogiri.tmm.server.dao.implementation.RoleDAO;
 import pl.aogiri.tmm.server.dao.implementation.UserDAO;
 import pl.aogiri.tmm.server.entity.implementation.PrivilegeEntity;
 import pl.aogiri.tmm.server.entity.implementation.RoleEntity;
-import pl.aogiri.tmm.server.entity.implementation.UserEntity;
 import pl.aogiri.tmm.server.util.PasswordEncoder;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @Component
 @Transactional
@@ -38,24 +35,24 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        if (alreadySetup)
-            return;
-        PrivilegeEntity readPrivilege
-                = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
-
-        List<PrivilegeEntity> adminPrivileges = Collections.singletonList(
-                readPrivilege);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-
-        RoleEntity adminRole = roleDAO.findByName("ROLE_ADMIN");
-        UserEntity user = new UserEntity();
-        user.setLogin("root");
-        user.setPassword(passwordEncoder.encode("root"));
-        user.setRoles(Collections.singletonList(adminRole));
-        user.setEmail("root@root.pl");
-        userDAO.save(user);
-
-        alreadySetup = true;
+//        if (alreadySetup)
+//            return;
+//        PrivilegeEntity readPrivilege
+//                = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
+//
+//        List<PrivilegeEntity> adminPrivileges = Collections.singletonList(
+//                readPrivilege);
+//        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+//
+//        RoleEntity adminRole = roleDAO.findByName("ROLE_ADMIN");
+//        UserEntity user = new UserEntity();
+//        user.setLogin("root");
+//        user.setPassword(passwordEncoder.encode("root"));
+//        user.setRoles(Collections.singletonList(adminRole));
+//        user.setEmail("root@root.pl");
+//        userDAO.save(user);
+//
+//        alreadySetup = true;
     }
 
 
