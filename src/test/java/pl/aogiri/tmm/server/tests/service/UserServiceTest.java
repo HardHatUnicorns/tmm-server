@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.aogiri.tmm.server.dao.implementation.TokenDAO;
 import pl.aogiri.tmm.server.dao.implementation.UserDAO;
 import pl.aogiri.tmm.server.dto.implementation.UserDTO;
 import pl.aogiri.tmm.server.entity.implementation.UserEntity;
@@ -36,6 +37,9 @@ public class UserServiceTest {
     private static UserDAO userDAO;
 
     @Mock
+    private static TokenDAO tokenDAO;
+
+    @Mock
     private static PasswordEncoder encoder;
 
     private static UserService userService;
@@ -43,7 +47,7 @@ public class UserServiceTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        userService = new UserService(userDAO, encoder);
+        userService = new UserService(userDAO, encoder, tokenDAO);
     }
 
     @Test

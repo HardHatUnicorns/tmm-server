@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.aogiri.tmm.server.dao.implementation.TokenDAO;
 import pl.aogiri.tmm.server.dao.implementation.UserDAO;
 import pl.aogiri.tmm.server.dto.implementation.UserDTO;
+import pl.aogiri.tmm.server.entity.implementation.TokenEntity;
 import pl.aogiri.tmm.server.entity.implementation.UserEntity;
 import pl.aogiri.tmm.server.exception.api.register.EmailExistException;
 import pl.aogiri.tmm.server.exception.api.register.FieldRequiredException;
@@ -25,12 +27,14 @@ import java.util.stream.StreamSupport;
 public class UserService implements GenericService {
 
     private UserDAO userDAO;
+    private TokenDAO tokenDAO;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder){
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder, TokenDAO tokenDAO){
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
+        this.tokenDAO = tokenDAO;
     }
 
     public Optional<UserDTO> findById(Long id){
@@ -76,6 +80,15 @@ public class UserService implements GenericService {
 
         if(dto.getPlainPassword() == null || dto.getPlainPassword().isBlank())
             throw new FieldRequiredException("Password");
+    }
+
+    public void createToken(UserEntity userEntity, String token){
+        TokenEntity registerToken = TokenEntity.builder().token(token).user(userEntity).build();
+        tokenDAO.save(registerToken);
+    }
+
+    public TokenEntity getToken(String token) {
+        return tokenDAO.findByToken(token);
     }
 
 }
