@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.aogiri.tmm</groupId>
-    <artifactId>ttm-server</artifactId>
+    <artifactId>tmm-server</artifactId>
     <version>0.0.1</version>
     <name>Tournament Management Manager</name>
     <description>A system to manage game tournaments.</description>
