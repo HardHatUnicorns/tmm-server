@@ -57,13 +57,13 @@ public class ExceptionHandlerController {
             ActivationFailedException.class
     })
     public ResponseEntity<ErrorResponse> notExistException(ActivationFailedException ex){
-        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST,
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_ACCEPTABLE,
                 Collections.singleton(
                         new ValidationSubError(
                                 ex.getMessage()
                         )
                 )),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
