@@ -38,6 +38,14 @@
         <wfPort></wfPort>
         <wfUsername></wfUsername>
         <wfPassword></wfPassword>
+
+        <datasource.url></datasource.url>
+        <datasource.username></datasource.username>
+        <datasource.password></datasource.password>
+
+        <mail.host></mail.host>
+        <mail.username></mail.username>
+        <mail.password></mail.password>
     </properties>
 
     <dependencies>
