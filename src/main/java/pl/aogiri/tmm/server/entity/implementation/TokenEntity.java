@@ -31,7 +31,7 @@ public class TokenEntity implements GenericEntity<RegisterTokenDTO> {
     @Column(nullable = false)
     private LocalDateTime expiryDate;
 
-    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "tokens_users",
             joinColumns = @JoinColumn(name = "token_id", referencedColumnName = "id"),

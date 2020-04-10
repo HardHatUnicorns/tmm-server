@@ -17,4 +17,8 @@ public class ValidationSubError extends SubError {
         this.field = field;
         this.message = message;
     }
+
+    public ValidationSubError(String message) {
+        this.message = message;
+    }
 }

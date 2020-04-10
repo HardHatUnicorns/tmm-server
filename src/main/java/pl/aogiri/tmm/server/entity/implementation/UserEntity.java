@@ -3,10 +3,9 @@ package pl.aogiri.tmm.server.entity.implementation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import pl.aogiri.tmm.server.dto.implementation.UserDTO;
 import pl.aogiri.tmm.server.entity.GenericEntity;
-import pl.aogiri.tmm.server.entity.listener.UserListener;
+import pl.aogiri.tmm.server.entity.listener.RegisterListener;
 import pl.aogiri.tmm.server.util.Mapper;
 
 import javax.persistence.*;
@@ -15,13 +14,17 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity(name = "users")
-@EntityListeners(UserListener.class)
+@EntityListeners(RegisterListener.class)
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserEntity implements GenericEntity<UserDTO> {
     public static final String ENTITY = "users";
+
+    public UserEntity() {
+        super();
+        this.enabled = false;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

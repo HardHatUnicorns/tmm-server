@@ -4,7 +4,8 @@ public enum Message {
     LOGIN_EXIST("Given login is already taken"),
     EMAIL_EXIST("Given email is already taken"),
     BAD_CREDENTIALS("Wrong credentials"),
-    FIELD_REQUIRED("%s is required")
+    FIELD_REQUIRED("%s is required"),
+    ACTIVATION_FAILED("Invalid data caused the activation to fail")
     ;
     private String message;
 

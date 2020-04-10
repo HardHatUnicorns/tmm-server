@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import pl.aogiri.tmm.server.exception.api.ApiException;
 import pl.aogiri.tmm.server.exception.api.register.EmailExistException;
 import pl.aogiri.tmm.server.exception.api.register.FieldRequiredException;
 import pl.aogiri.tmm.server.exception.api.register.LoginExistException;
 import pl.aogiri.tmm.server.exception.api.register.RegisterException;
+import pl.aogiri.tmm.server.exception.api.token.ActivationFailedException;
 import pl.aogiri.tmm.server.response.error.ErrorResponse;
 import pl.aogiri.tmm.server.response.error.sub.SubError;
 import pl.aogiri.tmm.server.response.error.sub.ValidationSubError;
@@ -50,6 +52,19 @@ public class ExceptionHandlerController {
                         )
                 )),
                 HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(value = {
+            ActivationFailedException.class
+    })
+    public ResponseEntity<ErrorResponse> notExistException(ApiException ex){
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.NO_CONTENT,
+                Collections.singleton(
+                        new ValidationSubError(
+                                ex.getMessage()
+                        )
+                )),
+                HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
