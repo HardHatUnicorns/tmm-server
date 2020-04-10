@@ -5,6 +5,6 @@ import pl.aogiri.tmm.server.util.enums.Message;
 
 public class ActivationFailedException extends ApiException {
     public ActivationFailedException() {
-        super(Message.ACTIVATION_FAILED.toString());
+        super(Message.ACTIVATION_FAILED.getMessage());
     }
 }

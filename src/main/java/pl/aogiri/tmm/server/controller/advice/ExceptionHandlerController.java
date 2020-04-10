@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import pl.aogiri.tmm.server.exception.api.ApiException;
 import pl.aogiri.tmm.server.exception.api.register.EmailExistException;
 import pl.aogiri.tmm.server.exception.api.register.FieldRequiredException;
 import pl.aogiri.tmm.server.exception.api.register.LoginExistException;
@@ -57,14 +56,14 @@ public class ExceptionHandlerController {
     @ExceptionHandler(value = {
             ActivationFailedException.class
     })
-    public ResponseEntity<ErrorResponse> notExistException(ApiException ex){
-        return new ResponseEntity<>(new ErrorResponse(HttpStatus.NO_CONTENT,
+    public ResponseEntity<ErrorResponse> notExistException(ActivationFailedException ex){
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST,
                 Collections.singleton(
                         new ValidationSubError(
                                 ex.getMessage()
                         )
                 )),
-                HttpStatus.NO_CONTENT);
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
