@@ -27,6 +27,7 @@ public class UserController extends GenericController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('USER_READ')")
     @GetMapping
     public ResponseEntity<Collection<UserDTO>> getUsers(){
         return ResponseEntity.ok(userService.findAll());

@@ -1,5 +1,6 @@
 package pl.aogiri.tmm.server.configuration;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -10,9 +11,14 @@ import pl.aogiri.tmm.server.dao.implementation.RoleDAO;
 import pl.aogiri.tmm.server.dao.implementation.UserDAO;
 import pl.aogiri.tmm.server.entity.implementation.PrivilegeEntity;
 import pl.aogiri.tmm.server.entity.implementation.RoleEntity;
+import pl.aogiri.tmm.server.entity.implementation.UserEntity;
+import pl.aogiri.tmm.server.exception.PrivilegeCreationException;
 import pl.aogiri.tmm.server.util.PasswordEncoder;
+import pl.aogiri.tmm.server.util.enums.Privileges;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 @Component
 @Transactional
@@ -33,53 +39,46 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         this.passwordEncoder = passwordEncoder;
     }
 
+    @SneakyThrows
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-//        if (alreadySetup)
-//            return;
-//        PrivilegeEntity readPrivilege
-//                = createPrivilegeIfNotFound("ADMIN_PRIVILEGE");
-//
-//        List<PrivilegeEntity> adminPrivileges = Collections.singletonList(
-//                readPrivilege);
-//        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-//
-//        RoleEntity adminRole = roleDAO.findByName("ROLE_ADMIN");
-//        UserEntity user = new UserEntity();
-//        user.setLogin("root");
-//        user.setPassword(passwordEncoder.encode("root"));
-//        user.setRoles(Collections.singletonList(adminRole));
-//        user.setEmail("root@root.pl");
-//        userDAO.save(user);
-//
-//        alreadySetup = true;
-    }
+        if (alreadySetup)
+            return;
 
+        RoleEntity adminRole = createAdminRole(createAllPrivileges());
 
+        UserEntity user = new UserEntity();
+        user.setLogin("root");
+        user.setPassword(passwordEncoder.encode("root"));
+        user.setRoles(Collections.singletonList(adminRole));
+        user.setEmail("root@root.pl");
+        userDAO.save(user);
 
-    @Transactional
-    public PrivilegeEntity createPrivilegeIfNotFound(String name) {
-
-        PrivilegeEntity privilege = privilegeDAO.findByName(name);
-        if (privilege == null) {
-            privilege = new PrivilegeEntity();
-            privilege.setName(name);
-            privilegeDAO.save(privilege);
-        }
-        return privilege;
+        alreadySetup = true;
     }
 
     @Transactional
-    public RoleEntity createRoleIfNotFound(
-            String name, Collection<PrivilegeEntity> privileges) {
-
-        RoleEntity role = roleDAO.findByName(name);
-        if (role == null) {
-            role = new RoleEntity();
-            role.setName(name);
-            role.setPrivileges(privileges);
-            roleDAO.save(role);
-        }
-        return role;
+    public RoleEntity createAdminRole(Collection<PrivilegeEntity> privilegeEntities) {
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName("ROLE_ADMIN");
+        roleEntity.setPrivileges(privilegeEntities);
+        roleDAO.save(roleEntity);
+        return roleEntity;
     }
+
+    @Transactional
+    public Collection<PrivilegeEntity> createAllPrivileges() throws PrivilegeCreationException {
+        Collection<PrivilegeEntity> privilegeEntities = new HashSet<>();
+        for (Privileges privilege : Privileges.values()) {
+            PrivilegeEntity privilegeEntity = new PrivilegeEntity();
+            privilegeEntity.setName(privilege.name());
+            privilegeDAO.save(privilegeEntity);
+            if(privilegeEntity.getId() == null){
+                throw new PrivilegeCreationException(privilege.name());
+            }
+            privilegeEntities.add(privilegeEntity);
+        }
+        return privilegeEntities;
+    }
+
 }
