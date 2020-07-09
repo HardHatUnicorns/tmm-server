@@ -3,8 +3,8 @@ package pl.aogiri.tmm.server.entity.listener;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import pl.aogiri.tmm.server.entity.implementation.UserEntity;
 import pl.aogiri.tmm.server.event.OnRegisterCompleteEvent;
@@ -19,12 +19,12 @@ public class RegisterListener implements ApplicationListener<OnRegisterCompleteE
 
     private static RegisterService registerService;
 
-    private static JavaMailSender sender;
+    private static MailSender sender;
 
     @Autowired
-    public RegisterListener(RegisterService registerService, JavaMailSender javaMailSender) {
+    public RegisterListener(RegisterService registerService, MailSender mailSender) {
         RegisterListener.registerService = registerService;
-        RegisterListener.sender = javaMailSender;
+        RegisterListener.sender = mailSender;
     }
 
     @PrePersist
@@ -44,10 +44,11 @@ public class RegisterListener implements ApplicationListener<OnRegisterCompleteE
         registerService.createToken(entity, token);
         String recipientAddress = entity.getEmail();
         String subject = "Registration Confirmation";
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText("This is your activation token : " + UUID.randomUUID().toString());
-        sender.send(email);
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("tmm@hardhatunicorns.com");
+        mailMessage.setTo(recipientAddress);
+        mailMessage.setSubject(subject);
+        mailMessage.setText("This is your activation token : " + token);
+        sender.send(mailMessage);
     }
 }
