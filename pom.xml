@@ -5,7 +5,7 @@
 
     <groupId>pl.aogiri.tmm</groupId>
     <artifactId>tmm-server</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <name>Tournament Management Manager</name>
     <description>A system to manage game tournaments.</description>
 
@@ -195,6 +195,11 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
             </plugin>
         </plugins>
     </build>
