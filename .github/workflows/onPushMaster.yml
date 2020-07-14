@@ -14,17 +14,8 @@ jobs:
       with:
         java-version: 11
 
-    - name: Bump version
-      run: mvn versions:set -DnextSnapshot=true
-
-    - name: Add & Commit version
-      uses: EndBug/add-and-commit@v4.2.1
-      with:
-        author_name: HHU - BOT
-        message: "Update version"
-        add: "pom.xml"
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#    - name: Bump version
+#      run: mvn versions:set -DnextSnapshot=true
 
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop # Shutdown the Default MySQL
