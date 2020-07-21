@@ -68,7 +68,7 @@ public class UserDAOTest extends BaseDAOTest{
                 .login("disabledUser")
                 .email("disabled@tmm.com")
                 .password("Hash#d!1")
-                .roles(Collections.emptyList())
+                .roles(Collections.emptySet())
                 .enabled(true)
                 .build());
 

@@ -1,6 +1,5 @@
 package pl.aogiri.tmm.server.configuration;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
@@ -41,11 +40,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Profile("dev")
-    @SneakyThrows
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        if (alreadySetup)
-            return;
         if (alreadySetup)
             return;
 
@@ -54,8 +50,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         UserEntity user = new UserEntity();
         user.setLogin("root");
         user.setPassword(passwordEncoder.encode("root"));
-        user.setRoles(Collections.singletonList(adminRole));
+        user.setRoles(Collections.singleton(adminRole));
         user.setEmail("root@root.pl");
+        userDAO.save(user);
+        user.setEnabled(true);
         userDAO.save(user);
 
         alreadySetup = true;
@@ -71,7 +69,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    public Collection<PrivilegeEntity> createAllPrivileges() throws PrivilegeCreationException {
+    public Collection<PrivilegeEntity> createAllPrivileges(){
         Collection<PrivilegeEntity> privilegeEntities = new HashSet<>();
         for (Privileges privilege : Privileges.values()) {
             PrivilegeEntity privilegeEntity = new PrivilegeEntity();

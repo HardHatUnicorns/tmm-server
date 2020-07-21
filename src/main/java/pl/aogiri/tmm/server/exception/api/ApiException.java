@@ -1,7 +1,9 @@
 package pl.aogiri.tmm.server.exception.api;
 
 
-public abstract class ApiException extends RuntimeException {
+import pl.aogiri.tmm.server.exception.GenericException;
+
+public abstract class ApiException extends GenericException {
 
     public ApiException(String message) {
         super(message);

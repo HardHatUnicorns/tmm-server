@@ -57,13 +57,13 @@ public class RegisterServiceTest {
 
     @Test
     void shouldRegisterNewUser() {
-        UserEntity userExpected = UserEntity.builder().id(2L).login("user").email("user@tmm.com").enabled(false).roles(Collections.emptyList()).build();
+        UserEntity userExpected = UserEntity.builder().id(2L).login("user").email("user@tmm.com").enabled(false).roles(Collections.emptySet()).build();
         UserDTO userFromUi = UserEntity.builder().login("user").email("user@tmm.com").build().toDTO();
         userFromUi.setPlainPassword("456");
         when(userDAO.save(any(UserEntity.class))).then(ans -> {
             UserEntity tmp = ans.getArgument(0, UserEntity.class);
             tmp.setId(2L);
-            tmp.setRoles(Collections.emptyList());
+            tmp.setRoles(Collections.emptySet());
             tmp.setEnabled(false);
             return tmp;
         });
@@ -76,7 +76,7 @@ public class RegisterServiceTest {
 
     @Test
     void shouldReturnResponseAboutLoginExist() {
-        UserDTO userToAdd = UserEntity.builder().login("user").email("user@tmm.com").password("456").roles(Collections.emptyList()).build().toDTO();
+        UserDTO userToAdd = UserEntity.builder().login("user").email("user@tmm.com").password("456").roles(Collections.emptySet()).build().toDTO();
         userToAdd.setPlainPassword("123");
         when(userDAO.countByLogin(anyString())).thenReturn(1L);
         when(encoder.encode(any())).thenReturn("Pa$$w0rd");
@@ -86,7 +86,7 @@ public class RegisterServiceTest {
 
     @Test
     void shouldReturnResponseAboutEmailExist() {
-        UserDTO userToAdd = UserEntity.builder().login("user").email("user@tmm.com").password("456").roles(Collections.emptyList()).build().toDTO();
+        UserDTO userToAdd = UserEntity.builder().login("user").email("user@tmm.com").password("456").roles(Collections.emptySet()).build().toDTO();
         userToAdd.setPlainPassword("123");
         when(userDAO.countByEmail(anyString())).thenReturn(1L);
         when(encoder.encode(any())).thenReturn("Pa$$w0rd");

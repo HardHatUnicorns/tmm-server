@@ -50,7 +50,7 @@ public class UserEntity implements GenericEntity<UserDTO> {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    private Collection<RoleEntity> roles = Collections.emptyList();
+    private Collection<RoleEntity> roles = Collections.emptySet();
 
     @Override
     public UserDTO toDTO() {

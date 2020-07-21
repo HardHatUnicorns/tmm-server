@@ -42,7 +42,7 @@ public class UserServiceTest {
     @Test
     public void shouldFindUserById() {
         final Long PRE_ID = 1L;
-        final UserEntity PRE_USER = UserEntity.builder().id(PRE_ID).login("root").email("root@tmm.com").enabled(true).password("123").roles(Collections.emptyList()).build();
+        final UserEntity PRE_USER = UserEntity.builder().id(PRE_ID).login("root").email("root@tmm.com").enabled(true).password("123").roles(Collections.emptySet()).build();
         when(userDAO.findById(PRE_ID)).thenReturn(Optional.of(PRE_USER));
 
         Optional<UserDTO> user = userService.findById(PRE_ID);
@@ -62,8 +62,8 @@ public class UserServiceTest {
     @Test
     void shouldFindAllUsers() {
         Iterable<UserEntity> userEntities = Arrays.asList(
-                UserEntity.builder().id(1L).login("root").email("root@tmm.com").enabled(true).password("123").roles(Collections.emptyList()).build(),
-                UserEntity.builder().id(2L).login("user").email("user@tmm.com").enabled(true).password("456").roles(Collections.emptyList()).build()
+                UserEntity.builder().id(1L).login("root").email("root@tmm.com").enabled(true).password("123").roles(Collections.emptySet()).build(),
+                UserEntity.builder().id(2L).login("user").email("user@tmm.com").enabled(true).password("456").roles(Collections.emptySet()).build()
         );
         when(userDAO.findAll()).thenReturn(userEntities);
 
