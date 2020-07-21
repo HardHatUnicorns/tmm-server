@@ -3,6 +3,7 @@ package pl.aogiri.tmm.server.configuration;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ import java.util.HashSet;
 @Transactional
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    boolean alreadySetup = false;
+    static boolean alreadySetup = false;
 
     private PrivilegeDAO privilegeDAO;
     private RoleDAO roleDAO;
@@ -39,9 +40,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Profile("dev")
     @SneakyThrows
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        if (alreadySetup)
+            return;
         if (alreadySetup)
             return;
 
