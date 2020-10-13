@@ -36,9 +36,22 @@ public class RoleService implements GenericService {
                         .collect(Collectors.toSet());
     }
 
+    public boolean existById(Long id){
+        return roleDAO.existsById(id);
+    }
+
     public RoleDTO create(RoleDTO roleDTO){
         RoleEntity roleEntity = roleDTO.toEntity();
         roleDAO.save(roleEntity);
         return roleEntity.toDTO();
     }
+
+    public RoleDTO update(RoleDTO roleDTO) {
+        return create(roleDTO);
+    }
+
+    public void delete(Long id) {
+        roleDAO.deleteById(id);
+    }
+
 }

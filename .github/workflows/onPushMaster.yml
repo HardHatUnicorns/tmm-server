@@ -1,9 +1,8 @@
-name: On push master deploy to Wildfly
+name: Bump version and test build
 
 on:
   push:
     branches: [ master ]
-
 
 jobs:
   build:
@@ -14,6 +13,18 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+
+    - name: Bump version
+      run: mvn versions:set -DnextSnapshot=true
+
+    - name: Add & Commit version
+      uses: EndBug/add-and-commit@v4.2.1
+      with:
+        author_name: HHU - BOT
+        message: "Update version"
+        add: "pom.xml"
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop # Shutdown the Default MySQL
